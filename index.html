@@ -73,18 +73,21 @@
             const enterBtn = document.getElementById("enter")
             const responseText = document.getElementById("response")
 
+            let context = ""
+
             enterBtn.addEventListener("mouseenter", () => {
                 responseText.innerText = getRandomChoice(hoverMessages)
             })
             enterBtn.addEventListener("click", async () => {
                 let message = inputBox.value
+                inputBox.value = ""
                 try {
                     const response = await fetch('https://cf8a4a82-110a-4d5e-8254-b989ef52ff72-00-12f77o19b4pu3.spock.replit.dev/api/message', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ message: message })
+                        body: JSON.stringify({ message: message, context: context })
                     });
 
                     if (!response.ok) {
@@ -93,6 +96,7 @@
 
                     const data = await response.json();
                     responseText.innerText = data.message
+                    context = data.newContext
                 } catch (error) {
                     console.error('Error fetching from backend:', error);
                     responseText.innerText = "Sorry, something went wrong.";
