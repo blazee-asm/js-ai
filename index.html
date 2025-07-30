@@ -96,11 +96,11 @@
                     }
 
                     const data = await response.json();
-                    responseText.innerText = data.message
+                    responseText.innerHTML = data.message
                     context = data.newContext
                 } catch (error) {
                     console.error('Error fetching from backend:', error);
-                    responseText.innerText = "Sorry, something went wrong.";
+                    responseText.innerHTML = "Sorry, something went wrong.";
                 }
             })
         </script>
